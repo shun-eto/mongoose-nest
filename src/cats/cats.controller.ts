@@ -16,8 +16,7 @@ export class CatsController {
   async findAll(): Promise<Cat[]> {
     const cats = await this.catsService.findAll();
     console.log('cat', cats[0]);
-    cats[0].testMethod();
-
+    cats[0].method1();
     return cats;
   }
 }

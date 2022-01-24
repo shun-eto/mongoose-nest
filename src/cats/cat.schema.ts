@@ -14,9 +14,11 @@ export class Cat {
   @Prop()
   breed: string;
 
-  testMethod() {
-    console.log('testMethod');
+  method1() {
+    console.log('this.name', this.name);
   }
 }
 
 export const CatSchema = SchemaFactory.createForClass(Cat);
+
+CatSchema.loadClass(Cat);
