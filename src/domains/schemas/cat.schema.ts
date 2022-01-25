@@ -14,6 +14,10 @@ export class Cat {
   @Prop()
   breed: string;
 
+  constructor(cat: Partial<Cat>) {
+    Object.assign(this, cat);
+  }
+
   method1() {
     console.log('this.name', this.name);
   }

@@ -1,27 +1,13 @@
 # Mongoose-Nest
 
-## メリット
+## ディレクトリを細かく分ける理由
 
-- Schema にメソッドを実装できない
+- Single Responsibility Principle に準拠
 
-## デメリット
+## 実装における注意点
 
-- entity のプロパティを private にできない
-
-## 実装の方向性と注意点
-
-1. DDD 採用の場合
-
-   - **[デメリット]**
-
-     - ビジネスロジックを実装するオブジェクトで Model をラップしてあげる必要がある -> Entity オブジェクト的かな？
-
-   - **[メリット]**
-     - Model が DAO なので、Model から直接 CRUD 処理を実行できる
-     - おそらく NestJS + Mongoose が NestJS における MongoDB との組み合わせであるため、DB に Mongo を採用する場合最もドキュメントが多そう
-
-2. DDD 不採用
-   - **[デメリット]**
-     - ロジックの集約を行わないので、ほぼ間違いなく DRY 原則に反する記述になる
-   - **[メリット]**
-     - Service 層にロジックを記述していくので、ロジックの集約とうを気にせず気軽に実装できる
+- Schema のプロパティは閉じていないため、実装者が DDD に準拠した実装になっているか気にしながら実装する必要がある（ここを守ることが DDD において最も肝要）
+- Service 層意外で Schema（ビジネスロジックを持つオブジェクト）が流出しないことを意識する。(Controller 層に Schema を直接渡さない)
+- domains/services/< domain > が最も実装判断が難しいが、イメージは domains/schemas/< domain > に実装すると不自然なメソットをここに実装する
+  - scene1. repository にアクセスする必要があるメソッド (重複チェック)
+  - scene2. 別 Domain を絡めた処理 ( Room と User という 2 つのドメインが絡み、Room の上限チェックなど )
